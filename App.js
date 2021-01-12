@@ -10,7 +10,8 @@ const App = () => {
   useEffect(() => {
     const fetchApi = async () => {
       const data = await fetchData()
-      setFetchData({ data })
+        .then((data) => setFetchData({ data }))
+      // .finally(() => setload(false));
     }
     fetchApi()
     // console.log(fetc.data.confirmed.value)
@@ -22,6 +23,12 @@ const App = () => {
     // })
   }, [])
 
+  const handlechange = async (country) => {
+    const data = await fetchData(country)
+    .then((data) => setFetchData({ data }))
+
+  }
+
   return (
     <ScrollView>
       <View>
@@ -29,8 +36,8 @@ const App = () => {
           source={require('./src/images/imagec.png')}
           style={styles.stretch}
         />
-        <CountryPicker />
-        <Card />
+        <CountryPicker handlechange={handlechange} />
+        <Card daTa={fetc} />
       </View>
     </ScrollView>
 

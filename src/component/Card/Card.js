@@ -2,26 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, ScrollView, FlatList, View, Text, StatusBar, } from 'react-native';
 import { Content, Card, CardItem, Body } from 'native-base';
 
-const CardIte = () => {
-    const [isLoading, setLoading] = useState(true);
-    const [data, setData] = useState({ confirmed: "", deaths: "", recovered: "", lastUpdate: "" });
+const CardIte = ({ daTa }) => {
+    // const [isLoading, setLoading] = useState(true);
+    // const [data, setData] = useState({ confirmed: "", deaths: "", recovered: "", lastUpdate: "" });
+
+    let propData = daTa.data
 
     useEffect(() => {
-
-        fetch("https://covid19.mathdro.id/api")
-            .then((response) => response.json())
-            .then((json) => {
-                setData({ confirmed: json.confirmed, deaths: json.deaths, recovered: json.recovered, lastUpdate: json.lastUpdate })
-            }
-            )
-            .catch((error) => console.error(error))
-            .finally(() => setLoading(false));
-    }, []);
+        // console.log(propData)
+        // fetch("https://covid19.mathdro.id/api")
+        //     .then((response) => response.json())
+        //     .then((json) => {
+        //         setData({ confirmed: json.confirmed, deaths: json.deaths, recovered: json.recovered, lastUpdate: json.lastUpdate })
+        //     }
+        //     )
+        //     .catch((error) => console.error(error))
+        //     .finally(() => setLoading(false));
+    }, [daTa]);
 
     return (
         <>
             <View style={{ flex: 1, padding: 24 }}>
-                {isLoading ? <ActivityIndicator /> : (
+                {/* {isLoading ? <ActivityIndicator /> : (
                     <>
 
                         <Content >
@@ -68,8 +70,52 @@ const CardIte = () => {
                     </>
 
 
-                )
-                }
+                )} */}
+                {propData ? (
+                    <>
+                        <Content >
+                            <Card style={styles.cardstyle1}>
+                                <CardItem footer header bordered>
+                                    <Text style={{ fontSize: 20, }}>Confirmed</Text>
+                                </CardItem>
+                                <Text style={{ fontSize: 28, margin: 10 }}>{propData.confirmed.value}</Text>
+                                <Text>{propData.lastUpdate}</Text>
+                                <CardItem >
+                                    <Text>No. of active cases of COVID19</Text>
+                                </CardItem>
+
+                            </Card>
+                        </Content>
+
+                        <Content >
+                            <Card style={styles.cardstyle2}>
+                                <CardItem footer header bordered>
+                                    <Text style={{ fontSize: 20, }}>Recovered</Text>
+                                </CardItem>
+                                <Text style={{ fontSize: 28, margin: 10 }}>{propData.recovered.value}</Text>
+                                <Text>{propData.lastUpdate}</Text>
+                                <CardItem >
+                                    <Text>No. of recovred from COVID19</Text>
+                                </CardItem>
+
+                            </Card>
+                        </Content>
+                        <Content >
+                            <Card style={styles.cardstyle3}>
+                                <CardItem footer header bordered>
+                                    <Text style={{ fontSize: 20, }}>Deaths</Text>
+                                </CardItem>
+                                <Text style={{ fontSize: 28, margin: 10 }}>{propData.deaths.value}</Text>
+                                <Text>{propData.lastUpdate}</Text>
+                                <CardItem >
+                                    <Text>No. of deaths cause by COVID19</Text>
+                                </CardItem>
+
+                            </Card>
+                        </Content>
+                    </>
+
+                ) : <ActivityIndicator />}
             </View>
             {/* <View style={styles.cards}>
                     <View>
